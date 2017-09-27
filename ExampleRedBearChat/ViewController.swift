@@ -12,10 +12,12 @@ class ViewController: UIViewController, BLEDelegate {
     
     // MARK: VC Properties
     var bleShield = BLE()
+    var rssiTimer = Timer()
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var buttonConnect: UIButton!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var textBox: UITextField!
+    @IBOutlet weak var rssiLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +25,11 @@ class ViewController: UIViewController, BLEDelegate {
         bleShield.delegate = self
     }
     
-    func readRSSITimer(){
-        //self.labelRSSI.text = rssi.stringValue; // when RSSI read is complete, display it
+    func readRSSITimer(timer:Timer){
+        bleShield.readRSSI { (number, error) in
+            // when RSSI read is complete, display it
+            self.rssiLabel.text = String(format: "%.1f",(number?.floatValue)!)
+        }
     }
 
     // MARK: Delegate Methods
@@ -37,12 +42,15 @@ class ViewController: UIViewController, BLEDelegate {
         self.buttonConnect.setTitle("Disconnect", for: .normal)
         
         // Schedule to read RSSI every 1 sec.
-        //rssiTimer = [NSTimer scheduledTimerWithTimeInterval:(float)1.0 target:self selector:@selector(readRSSITimer:) userInfo:nil repeats:YES];
+        rssiTimer = Timer.scheduledTimer(withTimeInterval: 1.0,
+                                         repeats: true,
+                                         block: self.readRSSITimer)
+
     }
     
     func bleDidDisconnectFromPeripheral() {
         self.buttonConnect.setTitle("Connect", for: .normal)
-        //[rssiTimer invalidate];
+        rssiTimer.invalidate()
     }
     
     func bleDidReceiveData(data: Data?) {

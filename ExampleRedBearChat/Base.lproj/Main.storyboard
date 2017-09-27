@@ -90,6 +90,7 @@
                     <connections>
                         <outlet property="buttonConnect" destination="TbX-Bu-sjV" id="KXi-sd-o2o"/>
                         <outlet property="labelText" destination="pAb-F4-XNK" id="6Va-Dm-6ke"/>
+                        <outlet property="rssiLabel" destination="RK4-eI-9ji" id="s5S-00-vCb"/>
                         <outlet property="spinner" destination="IEr-5P-BUp" id="MYL-ea-50K"/>
                         <outlet property="textBox" destination="rtY-Iv-Zuw" id="3UL-pf-coI"/>
                     </connections>
