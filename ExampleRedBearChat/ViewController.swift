@@ -8,11 +8,11 @@
 
 import UIKit
 
-// MARK: CHANGE 2a: No longer should to be a delegate
+// MARK: CHANGE 2: No longer should this view be a BLE delegate
 class ViewController: UIViewController, BLEDelegate {
     
     // MARK: VC Properties
-    // MARK: CHANGE 2.b and 3: Add support for lazy instantiation (like we did in the table view controller)
+    // MARK: CHANGE 3: No longer have BLE instantiate itself. Instead: Add support for lazy instantiation (like we did in the table view controller)
     var bleShield = BLE()
     var rssiTimer = Timer()
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -27,7 +27,8 @@ class ViewController: UIViewController, BLEDelegate {
         //   you should not let this ViewController be the BLE delegate
         bleShield.delegate = self
         
-        // MARK: CHANGE 4: add subscription to notifications from the app delegate
+        // MARK: CHANGE 4: Nothing to actually change here, just get familiar with
+        //  the code below and what the notificaitons mean.
         // These selector functions should be created from the old BLEDelegate functions
         // One example has already been completed for you on the receiving of data function
         
@@ -43,7 +44,7 @@ class ViewController: UIViewController, BLEDelegate {
                                                name: NSNotification.Name(rawValue: kBleDisconnectNotification),
                                                object: nil)
         
-        // BLE Disconnect Notification
+        // BLE Recieve Data Notification
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.onBLEDidRecieveDataNotification),
                                                name: NSNotification.Name(rawValue: kBleReceivedDataNotification),
@@ -63,14 +64,13 @@ class ViewController: UIViewController, BLEDelegate {
     func bleDidUpdateState() {
         
     }
-    // MARK :CHANGE 7: create function called from "BLEDidConnect" notification (you can change the function below)
+    // MARK: CHANGE 7: use function from "BLEDidConnect" notification
     // in this function, update a label on the UI to have the name of the active peripheral
     // you might be interested in the following method (from objective C):
     // NSString *deviceName =[notification.userInfo objectForKey:@"deviceName"];
-    // now just wait to send or receive
     // NEW  CONNECT FUNCTION
     @objc func onBLEDidConnectNotification(notification:Notification){
-        print("Notification that BLE Connected ")
+        print("Notification arrived that BLE Connected")
     }
     
     // OLD DELEGATION CONNECT FUNCTION
@@ -94,7 +94,7 @@ class ViewController: UIViewController, BLEDelegate {
     
     // NEW  DISCONNECT FUNCTION
     @objc func onBLEDidDisconnectNotification(notification:Notification){
-        print("Notification that BLE Disconneected Peripheral")
+        print("Notification arrived that BLE Disconnected a Peripheral")
     }
     
     // OLD FUNCTION: parse the received data using BLEDelegate protocol
