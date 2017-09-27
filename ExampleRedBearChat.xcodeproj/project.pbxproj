@@ -15,6 +15,7 @@
 		B6EB9D7F1F7B30A00059B1A0 /* ExampleRedBearChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9D7E1F7B30A00059B1A0 /* ExampleRedBearChatTests.swift */; };
 		B6EB9D8A1F7B30A00059B1A0 /* ExampleRedBearChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9D891F7B30A00059B1A0 /* ExampleRedBearChatUITests.swift */; };
 		B6EB9D981F7B30CC0059B1A0 /* BLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9D971F7B30CB0059B1A0 /* BLE.swift */; };
+		B6EB9D9A1F7B56B30059B1A0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9D991F7B56B30059B1A0 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B6EB9D891F7B30A00059B1A0 /* ExampleRedBearChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRedBearChatUITests.swift; sourceTree = "<group>"; };
 		B6EB9D8B1F7B30A00059B1A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6EB9D971F7B30CB0059B1A0 /* BLE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLE.swift; sourceTree = "<group>"; };
+		B6EB9D991F7B56B30059B1A0 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				B6EB9D971F7B30CB0059B1A0 /* BLE.swift */,
 				B6EB9D691F7B30A00059B1A0 /* AppDelegate.swift */,
 				B6EB9D6B1F7B30A00059B1A0 /* ViewController.swift */,
+				B6EB9D991F7B56B30059B1A0 /* TableViewController.swift */,
 				B6EB9D6D1F7B30A00059B1A0 /* Main.storyboard */,
 				B6EB9D701F7B30A00059B1A0 /* Assets.xcassets */,
 				B6EB9D721F7B30A00059B1A0 /* LaunchScreen.storyboard */,
@@ -265,6 +268,7 @@
 				B6EB9D6C1F7B30A00059B1A0 /* ViewController.swift in Sources */,
 				B6EB9D981F7B30CC0059B1A0 /* BLE.swift in Sources */,
 				B6EB9D6A1F7B30A00059B1A0 /* AppDelegate.swift in Sources */,
+				B6EB9D9A1F7B56B30059B1A0 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
