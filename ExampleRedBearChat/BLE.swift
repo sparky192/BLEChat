@@ -29,7 +29,7 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     var delegate: BLEDelegate?
     
     private      var centralManager:   CBCentralManager!
-    private      var activePeripheral: CBPeripheral?
+    private(set) var activePeripheral: CBPeripheral?
     private      var characteristics = [String : CBCharacteristic]()
     private      var data:             NSMutableData?
     private(set) var peripherals     = [CBPeripheral]()

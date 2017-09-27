@@ -23,7 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BLEDelegate {
     }
     
     func bleDidConnectToPeripheral() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kBleConnectNotification), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kBleConnectNotification),
+                                        object: self,
+                                        userInfo:["name":self.bleShield.activePeripheral?.name! as Any])
     }
     
     func bleDidDisconnectFromPeripheral() {
