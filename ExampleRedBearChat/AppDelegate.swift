@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BLEDelegate {
     
     func bleDidReceiveData(data: Data?) {
         if let dataSafe = data{
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kBleConnectNotification),
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kBleReceivedDataNotification),
                                             object: self,
                                             userInfo:["data":dataSafe])
         }

@@ -74,7 +74,7 @@ class TableViewController: UITableViewController {
     }
     
 
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var peripheral = self.bleShield.peripherals[indexPath.row]
         
         // MARK: CHANGE 6: add code here to connect to the selected peripheral
