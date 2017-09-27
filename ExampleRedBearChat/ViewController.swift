@@ -96,8 +96,7 @@ class ViewController: UIViewController, BLEDelegate {
         let s = textBox.text!
         let d = s.data(using: String.Encoding.utf8)!
         bleShield.write(d)
-        
-//        if (self.textField.text.length > 16)
+        // if (self.textField.text.length > 16)
     }
     
     func connectTimer(timer:Timer){
