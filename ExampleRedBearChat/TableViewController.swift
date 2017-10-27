@@ -42,7 +42,7 @@ class TableViewController: UITableViewController {
         // disconnect from any peripherals
         for peripheral in bleShield.peripherals {
             if(peripheral.state == .connected){
-                bleShield.disconnectFromPeripheral(peripheral: peripheral)
+                _ = bleShield.disconnectFromPeripheral(peripheral: peripheral)
             }
         }
         
@@ -75,10 +75,10 @@ class TableViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var peripheral = self.bleShield.peripherals[indexPath.row]
+        let peripheral = self.bleShield.peripherals[indexPath.row]
         
         // MARK: CHANGE 6: add code here to connect to the selected peripheral
-        bleShield.connectToPeripheral(peripheral: peripheral)
+        _ = bleShield.connectToPeripheral(peripheral: peripheral)
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
         self.show(vc, sender: self)

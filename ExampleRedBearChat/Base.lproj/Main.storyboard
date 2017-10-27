@@ -224,6 +224,7 @@
                         <outlet property="bpmLabel" destination="T2G-p1-vPs" id="kun-bQ-XZs"/>
                         <outlet property="deviceLabel" destination="0TE-XG-IE7" id="cKl-jp-vLB"/>
                         <outlet property="labelText" destination="pAb-F4-XNK" id="6Va-Dm-6ke"/>
+                        <outlet property="ldrLabel" destination="VW1-hB-NpC" id="WGA-gT-n2b"/>
                         <outlet property="rssiLabel" destination="RK4-eI-9ji" id="s5S-00-vCb"/>
                         <outlet property="spinner" destination="W6m-yw-dkz" id="rqE-5I-F2e"/>
                         <outlet property="textBox" destination="rtY-Iv-Zuw" id="3UL-pf-coI"/>

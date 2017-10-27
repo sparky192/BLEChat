@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     var arrayMag = Array(repeating: Float(0), count: Int(buffersize/2))
     var dataBuffer = Buffer(with: 2048)
     var bpmTimer = Timer()
+    var bpmResetTimer = Timer()
+    var monitoringHr = false
     
     //-------------------------------------
 
@@ -132,18 +134,32 @@ class ViewController: UIViewController {
         labelText.text = s
 
     }
-    
+    //------------------------------------
     // NEW FUNCTION EXAMPLE: this was written for you to show how to change to a notification based model
     @objc func onBLEDidRecieveDataNotification(notification:Notification){
         let d = notification.userInfo?["data"] as! Data?
         let s = String(bytes: d!, encoding: String.Encoding.ascii)
-        if let value = Float(s!){
-            self.dataBuffer.add(point: value)
-            //print(d)
-            self.labelText.text = s
+        if (s?.index(of: "A") != nil){
+            if(!monitoringHr){
+                monitoringHr  = true
+            }
+            let startIndex = s?.index((s?.startIndex)!, offsetBy: 1)
+            let endIndex = s?.index((s?.startIndex)!, offsetBy: 4)
+            
+            let hrData = s![startIndex!...endIndex!]
+            //print(hrData)
+            if let value = Float(hrData){
+                self.dataBuffer.add(point: value)
+                self.labelText.text = String(hrData)
+            }
+        }
+        if (s?.index(of: "B") != nil){
+            let startIndex = s?.index((s?.startIndex)!, offsetBy: 6)
+            let ldrData = s![startIndex!...]
+            self.ldrLabel.text = String(ldrData)
         }
     }
-    
+    //------------------------------------------
     // MARK: User initiated Functions
     // MARK: CHANGE 1.b: change this as you no longer need to search for perpipherals in this view controller
 //    @IBAction func buttonScanForDevices(_ sender: UIButton) {
@@ -230,6 +246,7 @@ class ViewController: UIViewController {
     }
     @IBAction func stopHR(_ sender: UIButton) {
         stopHeartRateMonitor()
+        
     }
     func startHeartRateMonitor() {
         //
@@ -242,6 +259,12 @@ class ViewController: UIViewController {
         let command = "B"
         let d = command.data(using: String.Encoding.ascii)!
         bleShield.write(d)
+        bpmResetTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (ts) in
+            self.monitoringHr = false
+            self.dataBuffer.reset()
+            self.labelText.text = "-"
+            self.bpmLabel.text = "-"
+        })
     }
     
     func startLDRMonitor() {
@@ -256,6 +279,9 @@ class ViewController: UIViewController {
         let command = "D"
         let d = command.data(using: String.Encoding.ascii)!
         bleShield.write(d)
+        _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (ts) in
+            self.ldrLabel.text = "-"
+        })
         
     }
 
@@ -263,28 +289,30 @@ class ViewController: UIViewController {
     func getBpm(timer:Timer) {
         
         let data = self.dataBuffer.getData()
-        let pad_size = ViewController.buffersize - data.count
-        var zeroPaddedData = data + Array(repeating: Float(0), count: pad_size)
-        
-        fft!.performForwardFFT(withData: &zeroPaddedData, andCopydBMagnitudeToBuffer: &arrayMag)
-        
-        var peaks = finder!.getFundamentalPeaks(fromBuffer: &arrayMag, withLength: UInt(Int(ViewController.buffersize/2)),
-                                                usingWindowSize: 15, andPeakMagnitudeMinimum: 20, aboveFrequency: 60.0)
-        
-        if (peaks != nil){
-            if peaks!.count > 0 {
-                let peak1: Peak = peaks![0] as! Peak
-                let res = Float(ViewController.samplingRate) / Float(ViewController.fftSize)
-                if peak1.frequency < 200{
-                    self.bpmLabel.text = "BPM: "+String(peak1.frequency)
-                }else{
+        if (data.count != 0 && monitoringHr){
+            let pad_size = ViewController.buffersize - data.count
+            var zeroPaddedData = data + Array(repeating: Float(0), count: pad_size)
+            
+            fft!.performForwardFFT(withData: &zeroPaddedData, andCopydBMagnitudeToBuffer: &arrayMag)
+            
+            var peaks = finder!.getFundamentalPeaks(fromBuffer: &arrayMag, withLength: UInt(Int(ViewController.buffersize/2)),
+                                                    usingWindowSize: 15, andPeakMagnitudeMinimum: 20, aboveFrequency: 60.0)
+            
+            if (peaks != nil){
+                if peaks!.count > 0 {
+                    let peak1: Peak = peaks![0] as! Peak
+                    let res = Float(ViewController.samplingRate) / Float(ViewController.fftSize)
+                    if peak1.frequency < 200{
+                        self.bpmLabel.text = "BPM: "+String(peak1.frequency)
+                    }else{
+                        
+                    }
+                    
+                    // print(arrayMag.max())
+                    print("Freq resolution",res)
+                    print("Heart rate is ",peak1.frequency)
                     
                 }
-                
-                // print(arrayMag.max())
-                print("Freq resolution",res)
-                print("Heart rate is ",peak1.frequency)
-                
             }
         }
     }
