@@ -78,6 +78,11 @@ class TableViewController: UITableViewController {
         var peripheral = self.bleShield.peripherals[indexPath.row]
         
         // MARK: CHANGE 6: add code here to connect to the selected peripheral
+        bleShield.connectToPeripheral(peripheral: peripheral)
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        self.show(vc, sender: self)
+        
     }
 
 }
